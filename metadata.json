@@ -1,0 +1,6 @@
+{
+  "name": "SinglesHome SG - HDB Housing Options for Singles Calculator",
+  "description": "Interactive Singapore HDB housing calculator and persuasive design case study.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
