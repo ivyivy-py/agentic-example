@@ -103,7 +103,7 @@ export default function App() {
 
             {/* Disqus Community Discussion Embed */}
             <DisqusComments
-              shortname="hdb-singles"
+              shortname="sample-oqdiekwyrl"
               defaultLanguage="zh_TW"
             />
           </div>
@@ -114,7 +114,7 @@ export default function App() {
           <div className="space-y-10 animate-fade-in">
             <EligibilityView inputs={inputs} setInputs={setInputs} />
             <DisqusComments
-              shortname="hdb-singles"
+              shortname="sample-oqdiekwyrl"
               defaultLanguage="zh_TW"
               article={{
                 id: 'hdb-singles-grants-eligibility',
@@ -132,7 +132,7 @@ export default function App() {
           <div className="space-y-10 animate-fade-in">
             <ProcessRoadmapView />
             <DisqusComments
-              shortname="hdb-singles"
+              shortname="sample-oqdiekwyrl"
               defaultLanguage="zh_TW"
               article={{
                 id: 'hdb-singles-process-roadmap',
@@ -150,7 +150,7 @@ export default function App() {
           <div className="space-y-10 animate-fade-in">
             <ServicesEstatesView />
             <DisqusComments
-              shortname="hdb-singles"
+              shortname="sample-oqdiekwyrl"
               defaultLanguage="zh_TW"
               article={{
                 id: 'hdb-singles-resale-vs-bto',
@@ -178,7 +178,7 @@ export default function App() {
               </p>
             </div>
             <DisqusComments
-              shortname="hdb-singles"
+              shortname="sample-oqdiekwyrl"
               defaultLanguage="zh_TW"
               showTopicSelector={true}
             />

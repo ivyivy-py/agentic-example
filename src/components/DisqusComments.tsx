@@ -1,5 +1,4 @@
-import React, { useState, useMemo } from 'react';
-import { DiscussionEmbed } from 'disqus-react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { MessageSquare, Globe, RefreshCw, Sparkles, HelpCircle } from 'lucide-react';
 
 export interface ArticleConfig {
@@ -58,7 +57,7 @@ interface DisqusCommentsProps {
 
 export const DisqusComments: React.FC<DisqusCommentsProps> = ({
   article: propArticle,
-  shortname = 'hdb-singles',
+  shortname = 'sample-oqdiekwyrl',
   defaultLanguage = 'zh_TW',
   showTopicSelector = true,
 }) => {
@@ -67,7 +66,6 @@ export const DisqusComments: React.FC<DisqusCommentsProps> = ({
   );
   const [language, setLanguage] = useState<string>(defaultLanguage);
   const [reloadKey, setReloadKey] = useState<number>(0);
-  const [hasLoaded, setHasLoaded] = useState<boolean>(false);
 
   const activeArticle = useMemo(() => {
     if (propArticle) {
@@ -77,7 +75,7 @@ export const DisqusComments: React.FC<DisqusCommentsProps> = ({
     return found || DEFAULT_ARTICLES[0];
   }, [propArticle, selectedArticleId]);
 
-  // Construct current URL
+  // Construct canonical URL
   const currentUrl = useMemo(() => {
     if (typeof window !== 'undefined') {
       const baseUrl = window.location.origin + window.location.pathname;
@@ -86,14 +84,64 @@ export const DisqusComments: React.FC<DisqusCommentsProps> = ({
     return activeArticle.url;
   }, [activeArticle.id, activeArticle.url]);
 
-  const disqusConfig = useMemo(() => {
-    return {
-      url: currentUrl,
-      identifier: activeArticle.id,
-      title: activeArticle.title,
-      language: language, // e.g. 'zh_TW' for Traditional Chinese (Taiwan)
+  // Initialize or reset Disqus thread with configuration
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const pageUrl = currentUrl;
+    const pageId = activeArticle.id;
+    const pageTitle = activeArticle.title;
+    const lang = language;
+
+    // Define disqus_config callback safely
+    (window as any).disqus_config = function () {
+      this.page.url = pageUrl;
+      this.page.identifier = pageId;
+      this.page.title = pageTitle;
+      if (lang) {
+        this.language = lang;
+      }
     };
-  }, [currentUrl, activeArticle.id, activeArticle.title, language]);
+
+    let timer: NodeJS.Timeout | null = null;
+
+    try {
+      if ((window as any).DISQUS) {
+        // Delay slightly to ensure #disqus_thread is rendered in DOM after state updates
+        timer = setTimeout(() => {
+          try {
+            (window as any).DISQUS.reset({
+              reload: true,
+              config: (window as any).disqus_config,
+            });
+          } catch (err) {
+            console.warn('Disqus reset error:', err);
+          }
+        }, 50);
+      } else {
+        const existingScript = document.getElementById('disqus-embed-script');
+        if (!existingScript) {
+          const d = document;
+          const s = d.createElement('script');
+          s.id = 'disqus-embed-script';
+          s.src = `https://${shortname}.disqus.com/embed.js`;
+          s.setAttribute('data-timestamp', String(+new Date()));
+          s.async = true;
+          s.crossOrigin = 'anonymous';
+          s.onerror = (e) => {
+            console.warn(`Disqus embed script for '${shortname}' could not be loaded.`);
+          };
+          (d.head || d.body).appendChild(s);
+        }
+      }
+    } catch (err) {
+      console.warn('Disqus initialization caught error:', err);
+    }
+
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [shortname, currentUrl, activeArticle.id, activeArticle.title, language, reloadKey]);
 
   const handleRefresh = () => {
     setReloadKey((prev) => prev + 1);
@@ -120,7 +168,7 @@ export const DisqusComments: React.FC<DisqusCommentsProps> = ({
               </span>
             </div>
             <p className="text-xs sm:text-sm text-[#5f5e5e] mt-0.5">
-              Powered by Disqus ({shortname}) &bull; Share your thoughts, ask housing questions, or discuss grant options
+              Powered by Disqus forum (<code className="text-[#005fa6] font-mono font-semibold">{shortname}</code>) &bull; Share your questions, reviews, or grant advice
             </p>
           </div>
         </div>
@@ -198,17 +246,19 @@ export const DisqusComments: React.FC<DisqusCommentsProps> = ({
         </div>
         <div className="flex items-center gap-1 text-[11px] text-[#5f5e5e] bg-white px-2.5 py-1 rounded-lg border border-[#e2dfde]">
           <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-          <span>Single Sign-On & Guest commenting enabled</span>
+          <span>Real-time Sync & Moderation Enabled</span>
         </div>
       </div>
 
-      {/* Disqus Embed Component */}
+      {/* Disqus Embed Element */}
       <div className="min-h-[280px] w-full pt-2">
-        <DiscussionEmbed
-          key={`${activeArticle.id}-${language}-${reloadKey}`}
-          shortname={shortname}
-          config={disqusConfig}
-        />
+        <div id="disqus_thread" key={`${activeArticle.id}-${language}-${reloadKey}`}></div>
+        <noscript>
+          Please enable JavaScript to view the{' '}
+          <a href="https://disqus.com/?ref_noscript" rel="nofollow">
+            comments powered by Disqus.
+          </a>
+        </noscript>
       </div>
 
       {/* Footer / Help note */}
