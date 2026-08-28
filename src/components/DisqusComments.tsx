@@ -11,30 +11,30 @@ export interface ArticleConfig {
 
 const DEFAULT_ARTICLES: ArticleConfig[] = [
   {
-    id: 'hdb-singles-calculator-main',
+    id: 'sample-oqdiekwyrl',
     title: 'HDB Housing Options for Singles Calculator & Strategy Discussion',
-    url: typeof window !== 'undefined' ? window.location.origin + '/#calculator' : 'https://singleshome-sg.web.app/#calculator',
+    url: typeof window !== 'undefined' ? window.location.origin + '/#calculator' : 'https://agentic-example.vercel.app/',
     category: 'Calculator & Housing Strategy',
     summary: 'Share your questions on Singles grant calculations, MSR ratios, loan options, and affordability limits.',
   },
   {
     id: 'hdb-singles-grants-eligibility',
     title: 'CPF Housing Grants & Single Citizen Scheme Eligibility 2026',
-    url: typeof window !== 'undefined' ? window.location.origin + '/#grants' : 'https://singleshome-sg.web.app/#grants',
+    url: typeof window !== 'undefined' ? window.location.origin + '/#grants' : 'https://agentic-example.vercel.app/#grants',
     category: 'Grants & Eligibility',
     summary: 'Discuss Enhanced CPF Housing Grant (EHG), Proximity Housing Grant (PHG), and age 35 rules.',
   },
   {
     id: 'hdb-singles-resale-vs-bto',
     title: 'Singles BTO 2-Room Flexi vs Resale Flat Decision Framework',
-    url: typeof window !== 'undefined' ? window.location.origin + '/#bto-resale' : 'https://singleshome-sg.web.app/#bto-resale',
+    url: typeof window !== 'undefined' ? window.location.origin + '/#bto-resale' : 'https://agentic-example.vercel.app/#bto-resale',
     category: 'BTO vs Resale',
     summary: 'Compare waiting times, Standard/Plus/Prime classifications, renovation costs, and estate amenities.',
   },
   {
     id: 'hdb-singles-persuasive-design',
     title: 'Persuasive Design & DOET Principles in Housing Interfaces',
-    url: typeof window !== 'undefined' ? window.location.origin + '/#persuasive-tech' : 'https://singleshome-sg.web.app/#persuasive-tech',
+    url: typeof window !== 'undefined' ? window.location.origin + '/#persuasive-tech' : 'https://agentic-example.vercel.app/#persuasive-tech',
     category: 'UI/UX Case Study',
     summary: 'Academic & UX critique on Norman conceptual models, feedback loops, and cognitive nudges.',
   },
@@ -57,12 +57,12 @@ interface DisqusCommentsProps {
 
 export const DisqusComments: React.FC<DisqusCommentsProps> = ({
   article: propArticle,
-  shortname = 'sample-oqdiekwyrl',
+  shortname = 'stroke-sample',
   defaultLanguage = 'zh_TW',
   showTopicSelector = true,
 }) => {
   const [selectedArticleId, setSelectedArticleId] = useState<string>(
-    propArticle?.id || DEFAULT_ARTICLES[0].id
+    propArticle?.id || 'sample-oqdiekwyrl'
   );
   const [language, setLanguage] = useState<string>(defaultLanguage);
   const [reloadKey, setReloadKey] = useState<number>(0);
@@ -72,16 +72,23 @@ export const DisqusComments: React.FC<DisqusCommentsProps> = ({
       return propArticle;
     }
     const found = DEFAULT_ARTICLES.find((a) => a.id === selectedArticleId);
-    return found || DEFAULT_ARTICLES[0];
+    return found || {
+      id: 'sample-oqdiekwyrl',
+      title: 'HDB Housing Options for Singles Discussion',
+      url: 'https://agentic-example.vercel.app/',
+    };
   }, [propArticle, selectedArticleId]);
 
   // Construct canonical URL
   const currentUrl = useMemo(() => {
+    if (activeArticle.url && activeArticle.url.includes('agentic-example.vercel.app')) {
+      return activeArticle.url;
+    }
     if (typeof window !== 'undefined') {
       const baseUrl = window.location.origin + window.location.pathname;
       return `${baseUrl}?topic=${encodeURIComponent(activeArticle.id)}`;
     }
-    return activeArticle.url;
+    return activeArticle.url || 'https://agentic-example.vercel.app/';
   }, [activeArticle.id, activeArticle.url]);
 
   // Initialize or reset Disqus thread with configuration

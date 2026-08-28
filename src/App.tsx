@@ -107,7 +107,7 @@ export default function App() {
 
             {/* Disqus Community Discussion Embed */}
             <DisqusComments
-              shortname="sample-oqdiekwyrl"
+              shortname="stroke-sample"
               defaultLanguage="zh_TW"
             />
           </div>
@@ -118,12 +118,12 @@ export default function App() {
           <div className="space-y-10 animate-fade-in">
             <EligibilityView inputs={inputs} setInputs={setInputs} />
             <DisqusComments
-              shortname="sample-oqdiekwyrl"
+              shortname="stroke-sample"
               defaultLanguage="zh_TW"
               article={{
                 id: 'hdb-singles-grants-eligibility',
                 title: 'CPF Housing Grants & Single Citizen Scheme Eligibility 2026',
-                url: typeof window !== 'undefined' ? window.location.origin + '/#grants' : 'https://singleshome-sg.web.app/#grants',
+                url: typeof window !== 'undefined' ? window.location.origin + '/#grants' : 'https://agentic-example.vercel.app/#grants',
                 category: 'Grants & Eligibility',
                 summary: 'Discuss Enhanced CPF Housing Grant (EHG), Proximity Housing Grant (PHG), and age 35 rules.',
               }}
@@ -136,12 +136,12 @@ export default function App() {
           <div className="space-y-10 animate-fade-in">
             <ProcessRoadmapView />
             <DisqusComments
-              shortname="sample-oqdiekwyrl"
+              shortname="stroke-sample"
               defaultLanguage="zh_TW"
               article={{
                 id: 'hdb-singles-process-roadmap',
                 title: 'Step-by-Step HDB Resale & BTO Buying Process for Singles',
-                url: typeof window !== 'undefined' ? window.location.origin + '/#process' : 'https://singleshome-sg.web.app/#process',
+                url: typeof window !== 'undefined' ? window.location.origin + '/#process' : 'https://agentic-example.vercel.app/#process',
                 category: 'Process Roadmap',
                 summary: 'Share timelines, HFE letter experiences, OTP negotiations, and completion steps.',
               }}
@@ -154,12 +154,12 @@ export default function App() {
           <div className="space-y-10 animate-fade-in">
             <ServicesEstatesView />
             <DisqusComments
-              shortname="sample-oqdiekwyrl"
+              shortname="stroke-sample"
               defaultLanguage="zh_TW"
               article={{
                 id: 'hdb-singles-resale-vs-bto',
                 title: 'Singles BTO 2-Room Flexi vs Resale Flat Decision Framework',
-                url: typeof window !== 'undefined' ? window.location.origin + '/#bto-resale' : 'https://singleshome-sg.web.app/#bto-resale',
+                url: typeof window !== 'undefined' ? window.location.origin + '/#bto-resale' : 'https://agentic-example.vercel.app/#bto-resale',
                 category: 'BTO vs Resale & Estates',
                 summary: 'Compare mature vs non-mature estates, price ranges, and renovation considerations.',
               }}
@@ -182,7 +182,7 @@ export default function App() {
               </p>
             </div>
             <DisqusComments
-              shortname="sample-oqdiekwyrl"
+              shortname="stroke-sample"
               defaultLanguage="zh_TW"
               showTopicSelector={true}
             />

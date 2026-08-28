@@ -67,8 +67,8 @@ export async function getOverallHealth() {
     pexels_api: pexels,
     disqus: {
       status: 'configured',
-      shortname: 'sample-oqdiekwyrl',
-      embedScript: 'https://sample-oqdiekwyrl.disqus.com/embed.js',
+      shortname: 'stroke-sample',
+      embedScript: 'https://stroke-sample.disqus.com/embed.js',
       message: 'Disqus comment widget configured.',
     },
     ms_clarity: {
