@@ -3,6 +3,7 @@ import path from "path";
 import { createServer as createViteServer } from "vite";
 import dotenv from "dotenv";
 import pexelsHandler from "./api/pexels";
+import healthHandler from "./app/health.js";
 
 dotenv.config();
 
@@ -13,11 +14,11 @@ async function startServer() {
   // JSON parsing middleware
   app.use(express.json());
 
-  // API routes FIRST
-  app.get("/api/health", (req, res) => {
-    res.json({ status: "ok" });
-  });
-
+  // Health and API routes FIRST
+  app.get("/app/health.js", healthHandler);
+  app.get("/app/health", healthHandler);
+  app.get("/api/health", healthHandler);
+  app.get("/api/health.js", healthHandler);
   app.get("/api/pexels", pexelsHandler);
 
   // Vite middleware for development
