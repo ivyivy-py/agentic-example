@@ -11,6 +11,7 @@ import { ProcessRoadmapView } from './components/ProcessRoadmapView';
 import { ServicesEstatesView } from './components/ServicesEstatesView';
 import { MobileNavBar } from './components/MobileNavBar';
 import { DisqusComments } from './components/DisqusComments';
+import { HeaderHeroImage } from './components/HeaderHeroImage';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<ActiveTab>('home');
@@ -55,7 +56,10 @@ export default function App() {
       />
 
       {/* Main Container */}
-      <main className="max-w-[1200px] w-full mx-auto px-4 sm:px-6 py-8 flex-grow">
+      <main className="max-w-[1200px] w-full mx-auto px-4 sm:px-6 py-6 flex-grow">
+        {/* Dynamic Pexels Housing Header Banner */}
+        <HeaderHeroImage />
+
         {/* TAB 1: HOME / CALCULATOR */}
         {activeTab === 'home' && (
           <div className="space-y-10 animate-fade-in">
